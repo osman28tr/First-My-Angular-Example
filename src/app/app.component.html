@@ -177,7 +177,7 @@
   }
 </style>
 
-<main class="main">
+<!-- <main class="main">
   <div class="content">
     <div class="left-side">
       <svg
@@ -322,7 +322,7 @@
       </div>
     </div>
   </div>
-</main>
+</main> -->
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
@@ -330,7 +330,18 @@
 <!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
-
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+<p>{{title}}</p>
+<app-standalone></app-standalone>
+<app-home [pageName]="title"></app-home>
+<p>{{person?.name}}</p>
+<ul>
+  <li *ngFor = "let name of names; let index = index; let first = first;">{{name}}
+  - {{index}} - {{first}}</li>
+</ul>
+<div *ngIf = "true">Merhaba</div>
+<div *ngIf="visible; else elseContent">merhaba 2</div>
+<ng-template #elseContent> 
+  merhaba 2 ng template
+</ng-template>
 <router-outlet />
