@@ -7,11 +7,12 @@ import { ChildComponent } from '../components/parent_to_child_communication/chil
 import { ChildComponent as ChildComponent2 } from '../components/child_to_parent_communication/child/child.component';
 import { ParentComponent } from '../components/parent_to_child_communication/parent/parent.component';
 import { ParentComponent as ParentComponent2 } from '../components/child_to_parent_communication/parent/parent.component';
+import { Parent2Component } from '../components/child_to_child_communication/parent2/parent2.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule,UpperCasePipe,SlicePipe,DatePipe,CurrencyPipe,CustomPipe,ChildComponent,ParentComponent,ChildComponent2,ParentComponent2],
+  imports: [FormsModule,UpperCasePipe,SlicePipe,DatePipe,CurrencyPipe,CustomPipe,ChildComponent,ParentComponent,ChildComponent2,ParentComponent2,Parent2Component],
   //templateUrl: './home.component.html',
   template:`<h4>{{pageName}}</h4>
   <input type="text" [(ngModel)]= "name"><br>
@@ -23,7 +24,8 @@ import { ParentComponent as ParentComponent2 } from '../components/child_to_pare
   {{price | currency : '$'}} <br>
   {{"Merhabalar" | custom : 1 : 4}}
   <app-parent></app-parent> <br>
-  <app-parent2></app-parent2> <br>`,
+  <app-parent2></app-parent2> <br>
+  <app-parent3></app-parent3> <br>`,
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
