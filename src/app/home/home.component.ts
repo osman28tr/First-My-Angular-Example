@@ -1,7 +1,7 @@
 import { CurrencyPipe, DatePipe, SlicePipe, UpperCasePipe } from '@angular/common';
 import { Input } from '@angular/core';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CustomPipe } from '../pipes/custom.pipe';
 import { ChildComponent } from '../components/parent_to_child_communication/child/child.component';
 import { ChildComponent as ChildComponent2 } from '../components/child_to_parent_communication/child/child.component';
@@ -15,7 +15,7 @@ import { ExampleComponentComponent } from '../components/example-component/examp
   standalone: true,
   imports: [FormsModule,UpperCasePipe,SlicePipe,DatePipe,
     CurrencyPipe,CustomPipe,ChildComponent,ParentComponent
-    ,ChildComponent2,ParentComponent2,Parent2Component,ExampleComponentComponent],
+    ,ChildComponent2,ParentComponent2,Parent2Component,ExampleComponentComponent,ReactiveFormsModule],
   //templateUrl: './home.component.html',
   template:`<h4>{{pageName}}</h4>
   <input type="text" [(ngModel)]= "name"><br>
@@ -36,7 +36,21 @@ import { ExampleComponentComponent } from '../components/example-component/examp
     <li><a routerLink="/app-example-component" routerLinkActive="active" ariaCurrentWhenActive="page">Second Component</a></li>
   </ul>
 </nav><br>
-<app-example-component data="Merhaba, onChangesEvent'i tetiklendi.">ng-content deneme</app-example-component>
+<app-example-component data="Merhaba, onChangesEvent'i tetiklendi.">ng-content deneme</app-example-component><br>
+  <form [formGroup]="frm" (ngSubmit)="onSubmit(frm)">
+    <input type="text" placeholder="name" formControlName="name"> <br>
+    <input type="text" placeholder="surname" formControlName="surname"> <br>
+    <input type="text" placeholder="email" formControlName="email"> <br>
+    <input type="text" placeholder="phone" formControlName="phone"> <br>
+    <div formGroupName="address">
+      <input type="text" formControlName="country"> <br>
+      <input type="text" formControlName="city"> <br>
+      <input type="text" formControlName="address"> <br>
+    </div>
+    <button>Send</button> <br>
+    <button (click)="ok()">Ok</button>
+  </form>
+  Valid:{{frm.valid}} <br>
   `,
   styleUrl: './home.component.scss',
 })
@@ -46,4 +60,32 @@ export class HomeComponent {
   date:Date;
   price:number;
   @Input() pageName:string;
+  frm:FormGroup;
+  constructor(private formBuilder:FormBuilder){
+    var formControls = {
+      name:["",Validators.required],
+      surname:["",Validators.required],
+      email:["",[Validators.required,Validators.email]],
+      phone:["",[Validators.required,Validators.maxLength(10)]],
+      address:formBuilder.group({
+        country:[""],
+        city:[""],
+        address:[""]
+      })
+    }
+    this.frm = formBuilder.group(formControls);
+
+    this.frm.valueChanges.subscribe({
+      next:data=>{
+        console.log(data);
+      }
+    })
+  }
+  
+  onSubmit(frm:FormGroup){
+    console.log(frm.value);
+  }
+  ok(){
+    this.frm.get("name").setValue("Hamza",{onlySelf:true});
+  }
 }

@@ -6,5 +6,5 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { CustomPipe } from './pipes/custom.pipe';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideClientHydration(),{provide:DEFAULT_CURRENCY_CODE,useValue:'TRY'},CustomPipe]
+  providers: [CustomPipe]
 };
