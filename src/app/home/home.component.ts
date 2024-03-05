@@ -50,6 +50,32 @@ import { ExampleComponentComponent } from '../components/example-component/examp
     <button>Send</button> <br>
     <button (click)="ok()">Ok</button>
   </form>
+  <button (click)="markAsTouched()">markAsTouched</button>
+  <button (click)="markAllTouched()">markAllTouched</button>
+  <button (click)="markAsUntouched()">markAsUntouched</button>
+  <button (click)="markAsDirty()">markAsDirty</button>
+  <button (click)="markAsPristine()">markAsPristine</button>
+  <button (click)="disable()">disable</button>
+  <button (click)="enable()">enable</button>
+
+    form touched : {{frm.touched}} <br>
+    'name' form control touched : {{frm.get('name').touched}} <br>
+    <hr>
+    form dirty : {{frm.dirty}} <br>
+    'name' form control dirty : {{frm.get('name').dirty}} <br>
+    <hr>
+    form disabled : {{frm.disabled}} <br>
+    'name' form control disabled : {{frm.get('name').disabled}} <br>
+    <hr>
+    form enabled : {{frm.enabled}} <br>
+    'name' form control enabled : {{frm.get('name').enabled}} <br>
+    <hr>
+    form pristine : {{frm.pristine}} <br>
+    'name' form control pristine : {{frm.get('name').pristine}} <br>
+    <hr>
+    form dirty : {{frm.dirty}} <br>
+    'name' form control dirty : {{frm.get('name').dirty}} <br>
+    <hr>
   Valid:{{frm.valid}} <br>
   `,
   styleUrl: './home.component.scss',
@@ -73,7 +99,7 @@ export class HomeComponent {
         address:[""]
       })
     }
-    this.frm = formBuilder.group(formControls);
+    this.frm = formBuilder.group(formControls); //response a form group
 
     this.frm.valueChanges.subscribe({
       next:data=>{
@@ -87,5 +113,26 @@ export class HomeComponent {
   }
   ok(){
     this.frm.get("name").setValue("Hamza",{onlySelf:true});
+  }
+  markAsTouched(){
+    this.frm.get("name").markAsTouched({onlySelf:true});
+  }
+  markAllTouched(){
+    this.frm.markAllAsTouched();
+  }
+  markAsUntouched(){
+    this.frm.markAsUntouched();
+  }
+  markAsDirty(){
+    this.frm.markAsDirty();
+  }
+  markAsPristine(){
+    this.frm.markAsPristine();
+  }
+  disable(){
+    this.frm.disable();
+  }
+  enable(){
+    this.frm.enable();
   }
 }
